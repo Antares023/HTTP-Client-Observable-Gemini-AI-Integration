@@ -1,0 +1,404 @@
+// Custom Color Palette Variables (optional local scope or global)
+$primary-color: #4f46e5; // Indigo 600
+$bg-color: #f8fafc; // Slate 50
+$user-bubble-bg: #4f46e5;
+$user-text: #ffffff;
+$ai-bubble-bg: #ffffff;
+$ai-text: #1e293b; // Slate 800
+
+ion-content {
+  --background: #{$bg-color};
+}
+
+.chat-background {
+  --background: #f8fafc;
+  /* Slate 50 */
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  ion-icon {
+    font-size: 1.2em;
+  }
+
+  span {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+}
+
+// Variables adjusted for consistent use
+$primary-gradient: linear-gradient(135deg, #6366f1, #a855f7); // Indigo to Purple
+
+.chat-container {
+  padding: 20px 20px 100px 20px; // Add bottom padding for fixed footer
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 100%;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  /* Fill most of the screen */
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+
+  .hero-text {
+    margin-bottom: 40px;
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin: 0;
+      background: $primary-gradient;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+      letter-spacing: -1px;
+    }
+
+    p {
+      font-size: 1.5rem;
+      color: #94a3b8;
+      margin-top: 8px;
+      font-weight: 400;
+    }
+  }
+
+  .suggestions-grid {
+    display: flex;
+    flex-wrap: wrap; // Changed from Grid to Flex for better centering
+    gap: 12px;
+    justify-content: center;
+    width: 100%;
+
+    .suggestion-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px;
+      width: 180px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 140px;
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        border-color: #cbd5e1;
+      }
+
+      p {
+        font-size: 0.95rem;
+        color: #334155;
+        font-weight: 500;
+        margin: 0;
+        line-height: 1.4;
+      }
+
+      ion-icon {
+        align-self: flex-end;
+        font-size: 1.5rem;
+        color: #6366f1;
+        background: #e0e7ff;
+        padding: 8px;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+// ... existing .message-wrapper Styles ...
+
+.message-wrapper {
+  // Existing styles kept same, just ensuring context
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  max-width: 85%;
+
+  &.user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+
+    .message-bubble {
+      background: $primary-gradient;
+      /* Use gradient for user bubble too */
+      color: white;
+      border-radius: 18px 18px 4px 18px;
+      box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+    }
+
+    .avatar {
+      display: none;
+    }
+  }
+
+  &.ai {
+    align-self: flex-start;
+
+    .message-bubble {
+      background: white;
+      color: #334155;
+      border-radius: 18px 18px 18px 4px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      border: 1px solid #e2e8f0;
+    }
+
+    .avatar ion-icon {
+      color: #4f46e5;
+      background: #e0e7ff;
+      padding: 6px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+    }
+  }
+}
+
+// Message Bubble & Markdown Styles (Keep existing)
+.message-bubble {
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  position: relative;
+  word-wrap: break-word;
+
+  &.loading {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    min-width: 60px;
+    justify-content: center;
+
+    ion-spinner {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  ::ng-deep {
+
+    // Keep existing Markdown styles
+    p {
+      margin: 0 0 8px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    ul,
+    ol {
+      margin: 0 0 8px;
+      padding-left: 20px;
+    }
+
+    pre {
+      background: #1e293b;
+      color: #e2e8f0;
+      padding: 12px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.9em;
+      margin: 10px 0;
+      white-space: pre-wrap;
+      position: relative; // Needed for copy button
+    }
+
+    code {
+      font-family: Consolas, Monaco, 'Courier New', monospace;
+      background: rgba(0, 0, 0, 0.06);
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: inherit;
+    }
+  }
+}
+
+// Floating Footer Styles
+ion-footer.floating-footer {
+  background: transparent;
+  box-shadow: none;
+  padding: 0 0 20px 0; // Bottom spacing
+
+  .footer-background {
+    background: transparent;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 16px;
+  }
+
+  .input-container {
+    display: flex;
+    align-items: flex-end;
+    /* Align to bottom so button stays at bottom when text grows */
+    background: white;
+    border-radius: 26px;
+    /* Slightly less rounded than 30px to match input field shape better */
+    padding: 8px 8px 8px 20px;
+    /* Balanced padding */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f1f5f9;
+    transition: all 0.2s ease;
+
+    &:focus-within {
+      box-shadow: 0 4px 25px rgba(99, 102, 241, 0.15);
+      border-color: #cbd5e1;
+    }
+  }
+
+  .custom-input {
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+    --background: transparent;
+    --color: #1e293b;
+    --placeholder-color: #64748b;
+    --placeholder-opacity: 0.6;
+
+    font-size: 1rem;
+    line-height: 1.5;
+    /* Good line height for readability */
+
+    min-height: 24px;
+    max-height: 120px;
+    margin: 4px 0;
+    /* Minimal vertical margin */
+  }
+
+  // Generic styling for copy button
+  ::ng-deep pre {
+
+    button,
+    .markdown-clipboard-button {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      padding: 4px 8px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      z-index: 10;
+      display: block !important;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      &::after {
+        content: " Copy";
+      }
+    }
+  }
+
+  .send-button {
+    --color: white;
+    background: #4f46e5; // Solid icon background
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-left: 12px;
+    /* More space between input and button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    /* Prevent button from shrinking */
+
+    ion-icon {
+      font-size: 1.2rem;
+      margin: 0; // Center visually
+      transform: translateX(2px); // Optical optical alignment
+    }
+
+    &[disabled] {
+      background: #e2e8f0;
+      --color: #94a3b8;
+      opacity: 1;
+    }
+  }
+}
+
+// Mobile Responsiveness
+@media (max-width: 768px) {
+  .chat-container {
+    padding: 16px 16px 90px 16px; // Reduced padding
+  }
+
+  .empty-state {
+    height: auto; // Allow scrolling on small screens if needed
+    min-height: 70vh;
+    padding-top: 20px;
+
+    .hero-text {
+      margin-bottom: 24px;
+
+      h1 {
+        font-size: 2.2rem; // Smaller title
+      }
+
+      p {
+        font-size: 1.1rem;
+      }
+    }
+
+    .suggestions-grid {
+      gap: 10px;
+
+      .suggestion-card {
+        width: calc(50% - 6px); // 2 columns
+        height: 120px;
+        padding: 12px;
+
+        p {
+          font-size: 0.85rem;
+        }
+
+        ion-icon {
+          font-size: 1.3rem;
+        }
+      }
+    }
+  }
+
+  .message-wrapper {
+    max-width: 92%; // Use more width
+  }
+
+  ion-footer.floating-footer {
+    padding-bottom: 10px; // Tighter bottom spacing
+
+    .input-container {
+      border-radius: 24px;
+      padding-left: 16px;
+    }
+
+    .custom-input {
+      font-size: 0.95rem;
+    }
+  }
+}

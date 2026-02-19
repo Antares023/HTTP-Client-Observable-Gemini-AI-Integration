@@ -1,0 +1,73 @@
+<ion-content [fullscreen]="true" class="chat-background">
+  <div class="chat-container">
+
+    <!-- Welcome Message if empty -->
+    <div *ngIf="chatHistory.length === 0" class="empty-state">
+      <div class="hero-text">
+        <h1 class="gradient-text">Halo, Ilham</h1>
+        <p>Ada yang bisa saya bantu hari ini?</p>
+      </div>
+
+      <div class="suggestions-grid">
+        <div class="suggestion-card" (click)="fillPrompt('Buatkan script Python untuk kalkulator')">
+          <p>Script Python kalkulator</p>
+          <ion-icon name="code-slash-outline"></ion-icon>
+        </div>
+        <div class="suggestion-card" (click)="fillPrompt('Jelaskan apa itu Angular dalam 1 kalimat')">
+          <p>Apa itu Angular?</p>
+          <ion-icon name="logo-angular"></ion-icon>
+        </div>
+        <div class="suggestion-card" (click)="fillPrompt('Berikan ide judul skripsi teknik informatika')">
+          <p>Ide judul skripsi</p>
+          <ion-icon name="school-outline"></ion-icon>
+        </div>
+        <div class="suggestion-card" (click)="fillPrompt('Tulis puisi senja yang estetik')">
+          <p>Buat puisi estetik</p>
+          <ion-icon name="pencil-outline"></ion-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Messages -->
+    <div *ngFor="let msg of chatHistory" [class]="'message-wrapper ' + (msg.role === 'user' ? 'user' : 'ai')">
+      <div class="avatar">
+        <ion-icon *ngIf="msg.role === 'user'" name="person-circle-outline"></ion-icon>
+        <ion-icon *ngIf="msg.role === 'model'" name="sparkles"></ion-icon>
+      </div>
+      <div class="message-bubble">
+        <div class="message-content">
+          <ng-container *ngIf="msg.role === 'model'; else userText">
+            <markdown [data]="msg.text" [clipboard]="true"></markdown>
+          </ng-container>
+          <ng-template #userText>
+            {{ msg.text }}
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="message-wrapper ai">
+      <div class="avatar">
+        <ion-icon name="sparkles"></ion-icon>
+      </div>
+      <div class="message-bubble loading">
+        <ion-spinner name="dots" color="medium"></ion-spinner>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border floating-footer">
+  <div class="footer-background">
+    <div class="input-container">
+      <ion-textarea class="custom-input" placeholder="Ketik pesan..." [(ngModel)]="userInput" [autoGrow]="true" rows="1"
+        (keydown)="handleEnter($event)">
+      </ion-textarea>
+      <ion-button fill="clear" class="send-button" (click)="kirimPesan()" [disabled]="isLoading || !userInput.trim()">
+        <ion-icon slot="icon-only" name="send"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</ion-footer>

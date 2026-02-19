@@ -1,0 +1,58 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Live Grammar Checker</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="scan-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="container">
+    <div class="header-section">
+      <h1>Check Your English</h1>
+      <p>Type below and let Gemini AI check your grammar instantly.</p>
+    </div>
+
+    <ion-card class="input-card">
+      <ion-card-content>
+        <ion-textarea
+          [formControl]="grammarInput"
+          placeholder="Type a sentence here..."
+          autoGrow="true"
+          rows="6"
+          class="custom-textarea"
+        ></ion-textarea>
+        
+        <div class="loading-indicator" *ngIf="loading">
+          <ion-spinner name="crescent" color="primary"></ion-spinner>
+          <span>Checking...</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <div *ngIf="result" class="result-section fade-in">
+      <ion-card [ngClass]="{'correct-card': result.status === 'Correct', 'incorrect-card': result.status === 'Incorrect'}">
+        <ion-card-header>
+          <ion-card-subtitle>Result</ion-card-subtitle>
+          <ion-card-title>
+            <ion-icon [name]="result.status === 'Correct' ? 'checkmark-circle' : 'alert-circle'" 
+                      [color]="result.status === 'Correct' ? 'success' : 'danger'"></ion-icon>
+            {{ result.status }}
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p class="correction-text" *ngIf="result.status === 'Incorrect'">
+            <span class="label">Correction: </span>
+            {{ result.correction }}
+          </p>
+          <p class="correction-text" *ngIf="result.status === 'Correct'">
+            Great job! Your grammar looks perfect.
+          </p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

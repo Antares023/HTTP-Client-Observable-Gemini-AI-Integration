@@ -1,0 +1,50 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Random User Generator</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  
+  <div class="container">
+    <ion-card *ngIf="user && !loading" class="user-card">
+      <div class="avatar-container">
+        <ion-avatar class="large-avatar">
+          <img [src]="user.picture.large" alt="User Profile" />
+        </ion-avatar>
+      </div>
+      
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">
+          {{ user.name.first }} {{ user.name.last }}
+        </ion-card-title>
+        <ion-card-subtitle class="ion-text-center">
+          {{ user.email }}
+        </ion-card-subtitle>
+      </ion-card-header>
+      
+      <ion-card-content class="ion-text-center">
+        <p><strong>Phone:</strong> {{ user.phone }}</p>
+        <p><strong>Location:</strong> {{ user.location.city }}, {{ user.location.country }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-container">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p>Generating User...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="error-container">
+      <p color="danger">{{ error }}</p>
+    </div>
+
+    <div class="action-container">
+      <ion-button expand="block" (click)="generateUser()" [disabled]="loading">
+        Generate User
+      </ion-button>
+    </div>
+  </div>
+
+</ion-content>
